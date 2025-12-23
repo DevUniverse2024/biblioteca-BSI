@@ -67,5 +67,6 @@ Este projeto permite:
 
 - Professor / Desenvolvedor: [Seu Nome]  
 - Este README deve ser lido antes de começar a trabalhar no projeto
+================================
 
 
