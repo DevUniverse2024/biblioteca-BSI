@@ -1,5 +1,5 @@
-Chave de acesso:
-    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
+##Chave de acesso:
+##    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
 # Biblioteca BSI
 
 Projeto Java com Ant para gerenciamento de biblioteca.
