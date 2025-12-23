@@ -10,6 +10,10 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+
+
 
 /**
  *
