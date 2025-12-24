@@ -9,7 +9,7 @@ package br.edu.bsi.biblioteca;
  * @author Carlos
  */
 public class FuncionarioForm extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FuncionarioForm.class.getName());
 
     /**
@@ -30,10 +30,12 @@ public class FuncionarioForm extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jbtnUsuarios = new javax.swing.JButton();
+        jbtnAcervo = new javax.swing.JButton();
+        jbtnEmprestimo = new javax.swing.JButton();
+        jbtnRelatorios = new javax.swing.JButton();
+        jbtnAutores = new javax.swing.JButton();
+        jbtnTitulos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -41,15 +43,22 @@ public class FuncionarioForm extends javax.swing.JFrame {
 
         jLabel2.setText("Área do Funcioário");
 
-        jButton1.setText("Cadastrar Usuários");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        jbtnUsuarios.setText("Cadastrar Usuários");
+        jbtnUsuarios.addActionListener(this::jbtnUsuariosActionPerformed);
 
-        jButton2.setText("Cadastro de Acervo");
+        jbtnAcervo.setText("Cadastro de Acervo");
+        jbtnAcervo.addActionListener(this::jbtnAcervoActionPerformed);
 
-        jButton3.setText("Empréstimo/Devoluções");
+        jbtnEmprestimo.setText("Empréstimo/Devoluções");
 
-        jButton4.setText("Relatórios");
-        jButton4.addActionListener(this::jButton4ActionPerformed);
+        jbtnRelatorios.setText("Relatórios");
+        jbtnRelatorios.addActionListener(this::jbtnRelatoriosActionPerformed);
+
+        jbtnAutores.setText("Autores");
+        jbtnAutores.addActionListener(this::jbtnAutoresActionPerformed);
+
+        jbtnTitulos.setText("Títulos");
+        jbtnTitulos.addActionListener(this::jbtnTitulosActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -58,8 +67,8 @@ public class FuncionarioForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(125, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1)
+                    .addComponent(jbtnAcervo)
+                    .addComponent(jbtnUsuarios)
                     .addComponent(jLabel2))
                 .addGap(142, 142, 142))
             .addGroup(layout.createSequentialGroup()
@@ -69,10 +78,15 @@ public class FuncionarioForm extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(113, 113, 113)
-                        .addComponent(jButton3))
+                        .addComponent(jbtnEmprestimo))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(151, 151, 151)
-                        .addComponent(jButton4)))
+                        .addComponent(jbtnRelatorios))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(151, 151, 151)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jbtnTitulos)
+                            .addComponent(jbtnAutores))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -82,29 +96,48 @@ public class FuncionarioForm extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addGap(35, 35, 35)
-                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbtnUsuarios)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbtnAutores)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(jbtnTitulos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbtnAcervo)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(jbtnEmprestimo)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addComponent(jbtnRelatorios)
+                .addGap(15, 15, 15))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       UsuarioForm telaUsuario = new UsuarioForm();
-    telaUsuario.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jbtnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUsuariosActionPerformed
+        UsuarioForm telaUsuario = new UsuarioForm();
+        telaUsuario.setVisible(true);
+    }//GEN-LAST:event_jbtnUsuariosActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jbtnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRelatoriosActionPerformed
         RelatorioForm telaRelatorio = new RelatorioForm();
-    telaRelatorio.setVisible(true);
-    }//GEN-LAST:event_jButton4ActionPerformed
+        telaRelatorio.setVisible(true);
+    }//GEN-LAST:event_jbtnRelatoriosActionPerformed
+
+    private void jbtnAcervoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAcervoActionPerformed
+        AcervoForm telaAcervo = new AcervoForm();
+        telaAcervo.setVisible(true);
+    }//GEN-LAST:event_jbtnAcervoActionPerformed
+
+    private void jbtnTitulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnTitulosActionPerformed
+        TituloForm telaTitulo = new TituloForm();
+        telaTitulo.setVisible(true);
+    }//GEN-LAST:event_jbtnTitulosActionPerformed
+
+    private void jbtnAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAutoresActionPerformed
+        AutoresForm  telaAutores = new AutoresForm();
+        telaAutores.setVisible(true);
+    }//GEN-LAST:event_jbtnAutoresActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,11 +165,13 @@ public class FuncionarioForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton jbtnAcervo;
+    private javax.swing.JButton jbtnAutores;
+    private javax.swing.JButton jbtnEmprestimo;
+    private javax.swing.JButton jbtnRelatorios;
+    private javax.swing.JButton jbtnTitulos;
+    private javax.swing.JButton jbtnUsuarios;
     // End of variables declaration//GEN-END:variables
 }

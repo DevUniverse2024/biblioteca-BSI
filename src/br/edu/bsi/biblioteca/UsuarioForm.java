@@ -106,6 +106,7 @@ public class UsuarioForm extends javax.swing.JFrame {
         btnLimpar = new javax.swing.JButton();
         txtSenha = new javax.swing.JPasswordField();
         jLabel6 = new javax.swing.JLabel();
+        brnVolta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -168,12 +169,15 @@ public class UsuarioForm extends javax.swing.JFrame {
 
         jLabel6.setText("Biblioteca BSI");
 
+        brnVolta.setText("Volta");
+        brnVolta.addActionListener(this::brnVoltaActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 38, Short.MAX_VALUE)
+                .addGap(0, 39, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32))
             .addGroup(layout.createSequentialGroup()
@@ -217,7 +221,10 @@ public class UsuarioForm extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(215, 215, 215)
-                        .addComponent(jLabel6)))
+                        .addComponent(jLabel6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(222, 222, 222)
+                        .addComponent(brnVolta)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -255,9 +262,11 @@ public class UsuarioForm extends javax.swing.JFrame {
                     .addComponent(btnAlterar)
                     .addComponent(btnExcluir)
                     .addComponent(btnLimpar))
-                .addGap(32, 32, 32)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(brnVolta)
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -497,6 +506,11 @@ public class UsuarioForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnExcluirActionPerformed
 
+    private void brnVoltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnVoltaActionPerformed
+       FuncionarioForm telaFuncionrio = new FuncionarioForm();
+        telaFuncionrio.setVisible(true);
+    }//GEN-LAST:event_brnVoltaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -563,6 +577,7 @@ public class UsuarioForm extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton brnVolta;
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnIncluir;
