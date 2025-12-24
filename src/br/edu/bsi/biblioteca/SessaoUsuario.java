@@ -6,13 +6,10 @@ package br.edu.bsi.biblioteca;
 
 /**
  *
- * @author Carlos
+ * @author Carlos verissimo
  */
-public class Main {
-    //
-    public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(() -> {
-            new LoginForm().setVisible(true);
-        });
-    }
+public class SessaoUsuario {
+    public static int idUsuarioLogado;
+    public static String nomeUsuarioLogado;
+    public static String tipoUsuarioLogado;
 }
