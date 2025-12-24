@@ -6,7 +6,7 @@ package br.edu.bsi.biblioteca;
 
 /**
  *
- * @author Carlos
+ * @author Carlos verissimo
  */
 public class SessaoUsuario {
     public static int idUsuarioLogado;

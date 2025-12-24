@@ -9,6 +9,7 @@ package br.edu.bsi.biblioteca;
  * @author Carlos
  */
 public class Main {
+    //
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
             new LoginForm().setVisible(true);
