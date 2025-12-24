@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.edu.bsi.biblioteca;
+
 import javax.swing.JOptionPane;
 
 import java.sql.Connection;
@@ -10,12 +11,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.logging.Logger;
+
 /**
  *
  * @author Carlos
  */
 public class LoginForm extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginForm.class.getName());
 
     /**
@@ -99,97 +101,98 @@ public class LoginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-     
 
-    String idTexto = txtId.getText();
-    String senha = new String(txtSenha.getPassword());
+        String idTexto = txtId.getText();
+        String senha = new String(txtSenha.getPassword());
 
-    if (idTexto.isEmpty() || senha.isEmpty()) {
-        JOptionPane.showMessageDialog(this,
-            "Informe usuário e senha!");
-        return;
-    }
-
-    try {
-        int idUsuario = Integer.parseInt(idTexto);
-
-        Connection conn = Conexao.getConnection();
-
-        String sql =
-            "SELECT nome, tipo, status, senha " +
-            "FROM usuario WHERE id = ?";
-
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, idUsuario);
-
-        ResultSet rs = ps.executeQuery();
-
-        if (rs.next()) {
-
-            String senhaBanco = rs.getString("senha");
-            String tipo = rs.getString("tipo");
-            String status = rs.getString("status");
-            String nome = rs.getString("nome");
-
-            if (!senhaBanco.equals(senha)) {
-                JOptionPane.showMessageDialog(this,
-                    "Senha incorreta!");
-                return;
-            }
-
-            if (!status.equals("ATIVO")) {
-                JOptionPane.showMessageDialog(this,
-                    "Usuário inadimplente!");
-                return;
-            }
-
-            // LOGIN OK
+        if (idTexto.isEmpty() || senha.isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                "Bem-vindo, " + nome);
-
-            abrirTelaPorPerfil(tipo);
-
-            this.dispose();
-
-        } else {
-            JOptionPane.showMessageDialog(this,
-                "Usuário não encontrado!");
+                    "Informe usuário e senha!");
+            return;
         }
 
-        rs.close();
-        ps.close();
-        conn.close();
+        try {
+            int idUsuario = Integer.parseInt(idTexto);
 
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this,
-            "ID inválido!");
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this,
-            "Erro: " + e.getMessage());
-    }
+            Connection conn = Conexao.getConnection();
+
+            String sql
+                    = "SELECT nome, tipo, status, senha "
+                    + "FROM usuario WHERE id = ?";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, idUsuario);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String senhaBanco = new String(txtSenha.getPassword());
+                //String senhaBanco = rs.getString("senha");
+                String tipo = rs.getString("tipo");
+                String status = rs.getString("status");
+                String nome = rs.getString("nome");
+
+                if (!senhaBanco.equals(senha)) {
+                    JOptionPane.showMessageDialog(this,
+                            "Senha incorreta!");
+                    return;
+                }
+
+                if (!status.equals("ATIVO")) {
+                    JOptionPane.showMessageDialog(this,
+                            "Usuário inadimplente!");
+                    return;
+                }
+                SessaoUsuario.idUsuarioLogado = idUsuario;
+                SessaoUsuario.nomeUsuarioLogado = nome;
+                SessaoUsuario.tipoUsuarioLogado = tipo;
+                // LOGIN OK
+                JOptionPane.showMessageDialog(this,
+                        "Bem-vindo, " + nome);
+
+                abrirTelaPorPerfil(tipo);
+
+                this.dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Usuário não encontrado!");
+            }
+
+            rs.close();
+            ps.close();
+            conn.close();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "ID inválido!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro: " + e.getMessage());
+        }
 
     }//GEN-LAST:event_btnLoginActionPerformed
-private void abrirTelaPorPerfil(String tipo) {
+    private void abrirTelaPorPerfil(String tipo) {
 
-    switch (tipo) {
+        switch (tipo) {
 
-        case "ADMIN":
-            new AdmForm().setVisible(true);
-            break;
+            case "ADMIN":
+                new AdmForm().setVisible(true);
+                break;
 
-        case "ALUNO":
-            new AlunoForm().setVisible(true);
-            break;
+            case "ALUNO":
+                new AlunoForm().setVisible(true);
+                break;
 
-        case "FUNCIONARIO":
-            new FuncionarioForm().setVisible(true);
-            break;
+            case "FUNCIONARIO":
+                new FuncionarioForm().setVisible(true);
+                break;
 
-        default:
-            JOptionPane.showMessageDialog(this,
-                "Perfil desconhecido!");
+            default:
+                JOptionPane.showMessageDialog(this,
+                        "Perfil desconhecido!");
+        }
     }
-}
 
     /**
      * @param args the command line arguments

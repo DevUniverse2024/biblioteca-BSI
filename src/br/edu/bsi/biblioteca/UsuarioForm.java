@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.edu.bsi.biblioteca;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,14 +14,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
-
-
 /**
  *
  * @author Carlos
  */
 public class UsuarioForm extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UsuarioForm.class.getName());
 
     /**
@@ -28,47 +27,55 @@ public class UsuarioForm extends javax.swing.JFrame {
      */
     public UsuarioForm() {
         initComponents();
+        btnIncluir.setEnabled(true);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
         carregarUsuarios();
         java.awt.EventQueue.invokeLater(() -> {
-        txtNome.requestFocusInWindow();
-    });
+            txtNome.requestFocusInWindow();
+        });
+
+        // Adiciona os RadioButtons existentes ao grupo que podemos manipular
+        // Inicializa o atributo da classe
+        // Adiciona os RadioButtons que já existem
     }
-private void carregarUsuarios() {
 
-    DefaultTableModel model =
-        (DefaultTableModel) tblUsuarios.getModel();
+    private void carregarUsuarios() {
 
-    model.setRowCount(0); // limpa a tabela
+        DefaultTableModel model
+                = (DefaultTableModel) tblUsuarios.getModel();
 
-    try {
-        Connection conn = Conexao.getConnection();
+        model.setRowCount(0); // limpa a tabela
 
-        String sql =
-            "SELECT id, nome, tipo, status " +
-            "FROM usuario " +
-            "ORDER BY tipo ASC, nome ASC";
+        try {
+            Connection conn = Conexao.getConnection();
 
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
+            String sql
+                    = "SELECT id, nome, tipo, status "
+                    + "FROM usuario "
+                    + "ORDER BY tipo ASC, nome ASC";
 
-        while (rs.next()) {
-            model.addRow(new Object[]{
-                rs.getInt("id"),
-                rs.getString("nome"),
-                rs.getString("tipo"),
-                rs.getString("status")
-            });
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getInt("id"),
+                    rs.getString("nome"),
+                    rs.getString("tipo"),
+                    rs.getString("status")
+                });
+            }
+
+            rs.close();
+            ps.close();
+            conn.close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao carregar usuários: " + e.getMessage());
         }
-
-        rs.close();
-        ps.close();
-        conn.close();
-
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this,
-            "Erro ao carregar usuários: " + e.getMessage());
     }
-}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -79,24 +86,25 @@ private void carregarUsuarios() {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.ButtonGroup grupoStatus = new javax.swing.ButtonGroup();
+        grupoStatus = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtID = new javax.swing.JTextField();
+        txtId = new javax.swing.JTextField();
         nome = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtSenha = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jcbStatus = new javax.swing.JComboBox<>();
+        jcbTipo = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         rbnAtivo = new javax.swing.JRadioButton();
-        rbnInadiplente = new javax.swing.JRadioButton();
+        rbnInadimplente = new javax.swing.JRadioButton();
         btnIncluir = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblUsuarios = new javax.swing.JTable();
+        btnLimpar = new javax.swing.JButton();
+        txtSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,8 +112,8 @@ private void carregarUsuarios() {
 
         jLabel2.setText("ID:");
 
-        txtID.setEditable(false);
-        txtID.setColumns(5);
+        txtId.setEditable(false);
+        txtId.setColumns(5);
 
         nome.setText("Nome:");
 
@@ -113,28 +121,26 @@ private void carregarUsuarios() {
 
         jLabel3.setText("Senha");
 
-        txtSenha.setColumns(5);
-        txtSenha.setText(" ");
-        txtSenha.addActionListener(this::txtSenhaActionPerformed);
-
         jLabel4.setText("Tipo:");
 
-        jcbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ALUNO", "ADMIN", "FUNCIONARIO" }));
+        jcbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--------", "ALUNO", "ADMIN", "FUNCIONARIO" }));
 
         jLabel5.setText("Status");
 
         grupoStatus.add(rbnAtivo);
-        rbnAtivo.setSelected(true);
         rbnAtivo.setText("Ativo");
 
-        grupoStatus.add(rbnInadiplente);
-        rbnInadiplente.setText("Inadiplente");
+        grupoStatus.add(rbnInadimplente);
+        rbnInadimplente.setText("Inadiplente");
 
         btnIncluir.setText("Incluir");
+        btnIncluir.addActionListener(this::btnIncluirActionPerformed);
 
         btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(this::btnAlterarActionPerformed);
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(this::btnExcluirActionPerformed);
 
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -147,7 +153,17 @@ private void carregarUsuarios() {
                 "ID", "Nome", "Tipo", "Status"
             }
         ));
+        tblUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblUsuariosMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tblUsuarios);
+
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(this::btnLimparActionPerformed);
+
+        txtSenha.setColumns(10);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -168,20 +184,20 @@ private void carregarUsuarios() {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jcbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jcbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(rbnInadiplente)
+                                    .addComponent(rbnInadimplente)
                                     .addComponent(rbnAtivo)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(66, 66, 66)
@@ -189,8 +205,10 @@ private void carregarUsuarios() {
                         .addGap(39, 39, 39)
                         .addComponent(btnAlterar)
                         .addGap(32, 32, 32)
-                        .addComponent(btnExcluir)))
-                .addContainerGap(186, Short.MAX_VALUE))
+                        .addComponent(btnExcluir)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimpar)))
+                .addContainerGap(96, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -204,7 +222,7 @@ private void carregarUsuarios() {
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nome)
@@ -216,18 +234,19 @@ private void carregarUsuarios() {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(jcbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(rbnAtivo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rbnInadiplente)
+                .addComponent(rbnInadimplente)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnIncluir)
                     .addComponent(btnAlterar)
-                    .addComponent(btnExcluir))
+                    .addComponent(btnExcluir)
+                    .addComponent(btnLimpar))
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
                 .addContainerGap())
@@ -236,13 +255,279 @@ private void carregarUsuarios() {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSenhaActionPerformed
+    private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
+        if (!validarCamposObrigatorios()) {
+            return;
+        }
+        try {
+            Connection conn = Conexao.getConnection();
+
+            String sql
+                    = "INSERT INTO usuario ( nome, senha, tipo, status) "
+                    + "VALUES (?, ?, ?, ?)";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            // Status vindo do ButtonGroup
+            String status = "";
+
+            if (rbnAtivo.isSelected()) {
+                status = "ATIVO";
+            } else if (rbnInadimplente.isSelected()) {
+                status = "INADIMPLENTE";
+            }
+            ps.setString(1, txtNome.getText());
+            ps.setString(2, new String(txtSenha.getPassword()));
+            ps.setString(3, jcbTipo.getSelectedItem().toString());
+            ps.setString(4, status);
+
+            ps.executeUpdate();
+
+            ps.close();
+            conn.close();
+
+            JOptionPane.showMessageDialog(this,
+                    "Usuário incluído com sucesso!");
+            limparTela();
+            carregarUsuarios();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao incluir: " + e.getMessage());
+        }
+
+    }//GEN-LAST:event_btnIncluirActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        limparTela();
+        btnIncluir.setEnabled(true);
+    }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+
+        // 1️⃣ Validação: precisa ter ID
+        if (txtId.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Selecione um usuário na lista para alterar.");
+            return;
+        }
+        if (!validarCamposObrigatorios()) {
+            return;
+        }
+        try {
+            Connection conn = Conexao.getConnection();
+
+            String sql
+                    = "UPDATE usuario "
+                    + "SET nome = ?, senha = ?, tipo = ?, status = ? "
+                    + "WHERE id = ?";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            // 2️⃣ Status via RadioButton
+            String status;
+            if (rbnAtivo.isSelected()) {
+                status = "ATIVO";
+            } else if (rbnInadimplente.isSelected()) {
+                status = "INADIMPLENTE";
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Selecione o status!");
+                return;
+            }
+
+            ps.setString(1, txtNome.getText());
+            ps.setString(2, txtSenha.getText());
+            ps.setString(3, jcbTipo.getSelectedItem().toString());
+            ps.setString(4, status);
+            ps.setInt(5, Integer.parseInt(txtId.getText()));
+
+            ps.executeUpdate();
+
+            ps.close();
+            conn.close();
+
+            // 3️⃣ Feedback ao usuário
+            JOptionPane.showMessageDialog(this,
+                    "Usuário alterado com sucesso!");
+
+            // 4️⃣ Limpa e recarrega
+            limparTela();
+            carregarUsuarios();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao alterar usuário: " + e.getMessage());
+        }
+
+    }//GEN-LAST:event_btnAlterarActionPerformed
+    private boolean validarCamposObrigatorios() {
+
+        // Nome
+        if (txtNome.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Informe o nome do usuário!");
+            txtNome.requestFocus();
+            return false;
+        }
+
+        // Senha (JPasswordField)
+        if (txtSenha.getPassword().length == 0) {
+            JOptionPane.showMessageDialog(this,
+                    "Informe a senha!");
+            txtSenha.requestFocus();
+            return false;
+        }
+// Tipo (JComboBox)
+        String tipoSelecionado = jcbTipo.getSelectedItem().toString();
+        if (tipoSelecionado.equals("--------")) {
+            JOptionPane.showMessageDialog(this,
+                    "Selecione o tipo do usuário!");
+            jcbTipo.requestFocus();
+            return false;
+        }
+        // Status (ButtonGroup)
+        if (grupoStatus.getSelection() == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Selecione o status do usuário!");
+            rbnAtivo.requestFocus(); // ou rbnInadimplente
+            return false;
+        }
+        return true; // tudo OK
+    }
+
+    private void tblUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMouseClicked
+//JOptionPane.showMessageDialog(this, "Clique detectado!");
+
+        // Se quiser exigir duplo clique, descomente:
+        // if (evt.getClickCount() != 2) return;
+        int linha = tblUsuarios.getSelectedRow();
+
+        if (linha == -1) {
+            return;
+        }
+
+        // Recupera dados da JTable
+        txtId.setText(tblUsuarios.getValueAt(linha, 0).toString());
+        txtNome.setText(tblUsuarios.getValueAt(linha, 1).toString());
+
+        String tipo = tblUsuarios.getValueAt(linha, 2).toString();
+        jcbTipo.setSelectedItem(tipo);
+
+        String status = tblUsuarios.getValueAt(linha, 3).toString();
+
+        // RadioButtons de status
+        if (status.equalsIgnoreCase("ATIVO")) {
+            rbnAtivo.setSelected(true);
+        } else {
+            rbnInadimplente.setSelected(true);
+        }
+
+        // Habilita botões
+        btnIncluir.setEnabled(false);
+        btnAlterar.setEnabled(true);
+        btnExcluir.setEnabled(true);
+
+    }//GEN-LAST:event_tblUsuariosMouseClicked
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+
+        int idSelecionado = Integer.parseInt(txtId.getText());
+
+        // Impede auto-exclusão
+        if (idSelecionado == SessaoUsuario.idUsuarioLogado) {
+            JOptionPane.showMessageDialog(this,
+                    "Você não pode excluir o seu próprio usuário!");
+            return;
+        }
+
+        // Desabilita botões durante a confirmação
+        btnIncluir.setEnabled(false);
+        btnAlterar.setEnabled(false);
+
+        int opcao = JOptionPane.showConfirmDialog(
+                this,
+                "Confirma a exclusão do usuário selecionado?",
+                "Confirmação",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+
+        // Se cancelar
+        if (opcao != JOptionPane.YES_OPTION) {
+            btnIncluir.setEnabled(true);
+            btnAlterar.setEnabled(true);
+            return;
+        }
+
+        try {
+            Connection conn = Conexao.getConnection();
+
+            String sql = "DELETE FROM usuario WHERE id = ?";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, Integer.parseInt(txtId.getText()));
+
+            ps.executeUpdate();
+
+            ps.close();
+            conn.close();
+
+            JOptionPane.showMessageDialog(this,
+                    "Usuário excluído com sucesso!");
+
+            // Volta para tela inicial
+            limparTela();
+            carregarUsuarios();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao excluir usuário: " + e.getMessage());
+        }
+
+
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
      */
+    private void limparTela() {
+
+        // Campos de texto
+        if (txtId != null) {
+            txtId.setText("");
+        }
+        if (txtNome != null) {
+            txtNome.setText("");
+        }
+        if (txtSenha != null) {
+            txtSenha.setText("");
+        }
+
+        if (jcbTipo != null) {
+            jcbTipo.setSelectedIndex(0);
+        }
+
+        if (rbnAtivo != null) {
+            rbnAtivo.setSelected(false);
+        }
+        if (rbnInadimplente != null) {
+            rbnInadimplente.setSelected(false);
+        }
+
+        if (tblUsuarios != null) {
+            tblUsuarios.clearSelection();
+        }
+
+        if (txtNome != null) {
+            txtNome.requestFocus();
+        }
+        btnIncluir.setEnabled(true);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -265,23 +550,29 @@ private void carregarUsuarios() {
         java.awt.EventQueue.invokeLater(() -> new UsuarioForm().setVisible(true));
     }
 
+    private javax.swing.JComboBox<String> cbTipo;
+    private javax.swing.JComboBox<String> cbStatus;
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnIncluir;
+    private javax.swing.JButton btnLimpar;
+    private javax.swing.ButtonGroup grupoStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JComboBox<String> jcbStatus;
+    private javax.swing.JComboBox<String> jcbTipo;
     private javax.swing.JLabel nome;
     private javax.swing.JRadioButton rbnAtivo;
-    private javax.swing.JRadioButton rbnInadiplente;
+    private javax.swing.JRadioButton rbnInadimplente;
     private javax.swing.JTable tblUsuarios;
-    private javax.swing.JTextField txtID;
+    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtSenha;
+    private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 }
