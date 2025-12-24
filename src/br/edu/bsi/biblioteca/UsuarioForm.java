@@ -287,7 +287,7 @@ public class UsuarioForm extends javax.swing.JFrame {
             conn.close();
 
             JOptionPane.showMessageDialog(this,
-                    "Usuário incluído com sucesso!");
+                    "Usuário incluído com sucesso!!!");
             limparTela();
             carregarUsuarios();
 
