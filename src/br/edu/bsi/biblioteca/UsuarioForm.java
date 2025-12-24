@@ -437,7 +437,7 @@ public class UsuarioForm extends javax.swing.JFrame {
         // Impede auto-exclusão
         if (idSelecionado == SessaoUsuario.idUsuarioLogado) {
             JOptionPane.showMessageDialog(this,
-                    "Você não pode excluir o seu próprio usuário!");
+                    "Você não pode excluir o seu próprio usuário, Obrigado!");
             return;
         }
 
