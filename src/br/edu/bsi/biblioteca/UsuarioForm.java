@@ -507,7 +507,9 @@ public class UsuarioForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void brnVoltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnVoltaActionPerformed
-       FuncionarioForm telaFuncionrio = new FuncionarioForm();
+        // Fecha a janela atual
+        this.dispose();
+        FuncionarioForm telaFuncionrio = new FuncionarioForm();
         telaFuncionrio.setVisible(true);
     }//GEN-LAST:event_brnVoltaActionPerformed
 

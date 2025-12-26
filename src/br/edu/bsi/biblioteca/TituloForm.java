@@ -424,6 +424,8 @@ public class TituloForm extends javax.swing.JFrame {
     }//GEN-LAST:event_tblTituloMouseClicked
 
     private void btnVoltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltaActionPerformed
+        // Fecha a janela atual
+        this.dispose();
         FuncionarioForm telaFuncionrio = new FuncionarioForm();
         telaFuncionrio.setVisible(true);
     }//GEN-LAST:event_btnVoltaActionPerformed

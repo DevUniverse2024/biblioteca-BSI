@@ -73,6 +73,8 @@ public class AcervoForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVoltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltaActionPerformed
+// Fecha a janela atual
+        this.dispose();
         FuncionarioForm telaFuncionrio = new FuncionarioForm();
         telaFuncionrio.setVisible(true);
     }//GEN-LAST:event_btnVoltaActionPerformed

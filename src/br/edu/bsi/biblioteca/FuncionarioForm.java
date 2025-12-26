@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.edu.bsi.biblioteca;
-
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Carlos
@@ -36,6 +37,8 @@ public class FuncionarioForm extends javax.swing.JFrame {
         jbtnRelatorios = new javax.swing.JButton();
         jbtnAutores = new javax.swing.JButton();
         jbtnTitulos = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,6 +63,13 @@ public class FuncionarioForm extends javax.swing.JFrame {
         jbtnTitulos.setText("Títulos");
         jbtnTitulos.addActionListener(this::jbtnTitulosActionPerformed);
 
+        jButton1.setForeground(new java.awt.Color(255, 0, 0));
+        jButton1.setText("Sair");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jButton2.setText("Relacionar Títulos /Autores");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -67,26 +77,33 @@ public class FuncionarioForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(125, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbtnAcervo)
                     .addComponent(jbtnUsuarios)
                     .addComponent(jLabel2))
-                .addGap(142, 142, 142))
+                .addGap(147, 147, 147))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(169, 169, 169)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(113, 113, 113)
-                        .addComponent(jbtnEmprestimo))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(151, 151, 151)
-                        .addComponent(jbtnRelatorios))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(151, 151, 151)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jbtnTitulos)
-                            .addComponent(jbtnAutores))))
+                            .addComponent(jbtnAutores)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(102, 102, 102)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton2)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jbtnEmprestimo)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(38, 38, 38)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jButton1)
+                                        .addComponent(jbtnRelatorios))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(125, 125, 125)
+                        .addComponent(jbtnAcervo)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -100,15 +117,19 @@ public class FuncionarioForm extends javax.swing.JFrame {
                 .addComponent(jbtnUsuarios)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbtnAutores)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jbtnTitulos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(27, 27, 27)
+                .addComponent(jButton2)
+                .addGap(32, 32, 32)
                 .addComponent(jbtnAcervo)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(jbtnEmprestimo)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbtnRelatorios)
-                .addGap(15, 15, 15))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         pack();
@@ -135,9 +156,24 @@ public class FuncionarioForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnTitulosActionPerformed
 
     private void jbtnAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAutoresActionPerformed
-        AutoresForm  telaAutores = new AutoresForm();
+        AutoresForm telaAutores = new AutoresForm();
         telaAutores.setVisible(true);
     }//GEN-LAST:event_jbtnAutoresActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JOptionPane.showMessageDialog(
+                null,
+                "Obrigado por usar este sistema!",
+                "Mensagem",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+        System.exit(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+         TitulosAutorForm telaTituloAutor = new TitulosAutorForm();
+        telaTituloAutor.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,6 +201,8 @@ public class FuncionarioForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton jbtnAcervo;

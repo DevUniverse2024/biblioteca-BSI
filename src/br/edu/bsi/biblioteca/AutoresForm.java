@@ -232,7 +232,7 @@ public class AutoresForm extends javax.swing.JFrame {
         txtIdAutor.setText(tblAutores.getValueAt(linha, 0).toString());
         txtNomeAutor.setText(tblAutores.getValueAt(linha, 1).toString());
 
-         // Habilita botões
+        // Habilita botões
         btnIncluir.setEnabled(false);
         btnAlterar.setEnabled(true);
         btnExcluir.setEnabled(true);
@@ -258,7 +258,7 @@ public class AutoresForm extends javax.swing.JFrame {
             PreparedStatement ps = conn.prepareStatement(sql);
 
             ps.setString(1, txtNomeAutor.getText());
-             ps.setInt(2, Integer.parseInt(txtIdAutor.getText()));
+            ps.setInt(2, Integer.parseInt(txtIdAutor.getText()));
             ps.executeUpdate();
 
             ps.close();
@@ -280,8 +280,6 @@ public class AutoresForm extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         int idSelecionado = Integer.parseInt(txtIdAutor.getText());
-
-        
 
         // Desabilita botões durante a confirmação
         btnIncluir.setEnabled(false);
@@ -331,6 +329,8 @@ public class AutoresForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void brnVoltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnVoltaActionPerformed
+// Fecha a janela atual
+        this.dispose();
         FuncionarioForm telaFuncionrio = new FuncionarioForm();
         telaFuncionrio.setVisible(true);
     }//GEN-LAST:event_brnVoltaActionPerformed
