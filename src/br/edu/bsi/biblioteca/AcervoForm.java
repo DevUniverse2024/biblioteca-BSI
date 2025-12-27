@@ -4,6 +4,13 @@
  */
 package br.edu.bsi.biblioteca;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import java.sql.SQLIntegrityConstraintViolationException;
+
 /**
  *
  * @author Carlos
@@ -17,6 +24,95 @@ public class AcervoForm extends javax.swing.JFrame {
      */
     public AcervoForm() {
         initComponents();
+        ajustarColunasAutores();
+        carregarAcervo();
+        carregarTitulos();
+    }
+
+    private void ajustarColunasAutores() {
+        // tblAutores.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+
+        tblAcervo.getColumnModel().getColumn(0).setPreferredWidth(60);  // ID
+        tblAcervo.getColumnModel().getColumn(1).setPreferredWidth(100); // Título
+        tblAcervo.getColumnModel().getColumn(2).setPreferredWidth(300); // Autores
+        tblAcervo.getColumnModel().getColumn(3).setPreferredWidth(50); // Tombo
+        tblAcervo.getColumnModel().getColumn(4).setPreferredWidth(100); // Status
+    }
+
+    private void carregarAcervo() {
+
+        DefaultTableModel model = (DefaultTableModel) tblAcervo.getModel();
+        model.setRowCount(0); // limpa a tabela
+
+        String sql
+                = "SELECT "
+                + " ac.id AS id_acervo, " // ALTERADO: ID do acervo
+                + " t.titulo, "
+                + " GROUP_CONCAT(a.nome SEPARATOR ', ') AS autores, "
+                + " ac.tombo, "
+                + " ac.status "
+                + "FROM titulo t "
+                + "JOIN acervo ac ON ac.titulo_id = t.id "
+                + "LEFT JOIN titulo_autor ta ON ta.titulo_id = t.id "
+                + "LEFT JOIN autor a ON a.id = ta.autor_id "
+                + "GROUP BY ac.id, t.titulo, ac.tombo, ac.status " // ALTERADO: agrupar por ac.id
+                + "ORDER BY t.titulo ASC";
+
+        try (
+                Connection conn = Conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery();) {
+
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getInt("id_acervo"), // ALTERADO: coloca ID do acervo
+                    rs.getString("titulo"),
+                    rs.getString("autores"),
+                    rs.getString("tombo"),
+                    rs.getString("status")
+                });
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao carregar Acervo: " + e.getMessage());
+        }
+    }
+
+    private void carregarTitulos() {
+
+        btnAdicionarAcervo.setEnabled(false);
+        btnExcluirAcervo.setEnabled(false);
+
+        DefaultTableModel model = (DefaultTableModel) tblTitulos.getModel();
+        model.setRowCount(0); // limpa a tabela
+
+        String sql
+                = "SELECT "
+                + " t.id, "
+                + " t.titulo, "
+                + " t.editora, "
+                + " GROUP_CONCAT(a.nome SEPARATOR ', ') AS autores "
+                + "FROM titulo t "
+                + "INNER JOIN titulo_autor ta ON ta.titulo_id = t.id "
+                + "INNER JOIN autor a ON a.id = ta.autor_id "
+                + "GROUP BY t.id, t.titulo, t.editora "
+                + "ORDER BY t.editora ASC, t.titulo ASC";
+
+        try (
+                Connection conn = Conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery();) {
+
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getInt("id"),
+                    rs.getString("titulo"),
+                    rs.getString("editora"),
+                    rs.getString("autores")
+                });
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao carregar Títulos: " + e.getMessage());
+        }
     }
 
     /**
@@ -28,45 +124,389 @@ public class AcervoForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPaneTotal = new javax.swing.JScrollPane();
+        jPanelTotal = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        txtTitulo = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jpnAcervo = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        txtTombo = new javax.swing.JTextField();
+        txtEditora = new javax.swing.JTextField();
+        txtAutores = new javax.swing.JTextField();
+        btnAdicionarAcervo = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        btnExcluirAcervo = new javax.swing.JButton();
+        btnAlterarAcervo = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txtIdAcervo = new javax.swing.JTextField();
+        txtTituloAcervo = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txtAutoresAcervo = new javax.swing.JTextField();
+        txtTomboAcervo = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        comboStatus = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
         btnVolta = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblAcervo = new javax.swing.JTable();
+        jScrollPaneTitulos = new javax.swing.JScrollPane();
+        tblTitulos = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel4.setText("ID:");
+
+        txtId.setEditable(false);
+        txtId.setColumns(5);
 
         jLabel1.setText("Biblioteca BSI");
 
         jLabel2.setText("Cadastrar Acervo");
 
+        txtTitulo.setEditable(false);
+        txtTitulo.setColumns(20);
+        txtTitulo.setText(" ");
+
+        jLabel6.setText("-");
+
+        jpnAcervo.setBorder(javax.swing.BorderFactory.createTitledBorder("Inclusao de Acervo"));
+
+        jLabel7.setText("Editora:");
+
+        jLabel8.setText("Autores");
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Informe o Numero do TOMBO"));
+
+        txtTombo.setColumns(15);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(67, 67, 67)
+                .addComponent(txtTombo, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(154, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(txtTombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(53, Short.MAX_VALUE))
+        );
+
+        txtEditora.setEditable(false);
+        txtEditora.setColumns(15);
+
+        txtAutores.setEditable(false);
+        txtAutores.setColumns(20);
+
+        btnAdicionarAcervo.setText("Adicionar Acervo");
+        btnAdicionarAcervo.addActionListener(this::btnAdicionarAcervoActionPerformed);
+
+        javax.swing.GroupLayout jpnAcervoLayout = new javax.swing.GroupLayout(jpnAcervo);
+        jpnAcervo.setLayout(jpnAcervoLayout);
+        jpnAcervoLayout.setHorizontalGroup(
+            jpnAcervoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnAcervoLayout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtEditora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtAutores, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jpnAcervoLayout.createSequentialGroup()
+                .addGap(263, 263, 263)
+                .addComponent(btnAdicionarAcervo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnAcervoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(133, 133, 133))
+        );
+        jpnAcervoLayout.setVerticalGroup(
+            jpnAcervoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnAcervoLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(jpnAcervoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEditora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtAutores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnAdicionarAcervo)
+                .addContainerGap())
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Alteração/Exclusao de Acervo"));
+
+        btnExcluirAcervo.setText("Excluir Acervo");
+        btnExcluirAcervo.addActionListener(this::btnExcluirAcervoActionPerformed);
+
+        btnAlterarAcervo.setText("Alterar Acervo");
+        btnAlterarAcervo.addActionListener(this::btnAlterarAcervoActionPerformed);
+
+        jLabel3.setText("id");
+
+        txtIdAcervo.setEditable(false);
+        txtIdAcervo.setColumns(5);
+
+        txtTituloAcervo.setEditable(false);
+        txtTituloAcervo.setColumns(20);
+        txtTituloAcervo.setText(" ");
+
+        jLabel9.setText("Autores");
+
+        txtAutoresAcervo.setEditable(false);
+        txtAutoresAcervo.setColumns(30);
+        txtAutoresAcervo.setText(" ");
+
+        txtTomboAcervo.setColumns(10);
+        txtTomboAcervo.setText(" ");
+
+        jLabel10.setText("Tombo");
+
+        comboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DISPONIVEL", "EMPRESTADO", "RESERVADO", "MANUTENCAO" }));
+
+        jLabel11.setText("Status");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(142, 142, 142)
+                .addComponent(btnAlterarAcervo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnExcluirAcervo)
+                .addGap(126, 126, 126))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(139, 139, 139)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtIdAcervo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtTituloAcervo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(118, 118, 118))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(137, 137, 137)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(txtTomboAcervo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(83, 83, 83)
+                        .addComponent(jLabel11)
+                        .addGap(18, 18, 18)
+                        .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtAutoresAcervo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtIdAcervo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTituloAcervo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(txtAutoresAcervo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtTomboAcervo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnExcluirAcervo)
+                    .addComponent(btnAlterarAcervo))
+                .addContainerGap())
+        );
+
         btnVolta.setText("Volta");
         btnVolta.addActionListener(this::btnVoltaActionPerformed);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Acervo", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION), "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+
+        tblAcervo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "id", "Titulo", "Autores", "Tombo", "Status"
+            }
+        ));
+        tblAcervo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAcervoMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblAcervo);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jScrollPaneTitulos.setBorder(javax.swing.BorderFactory.createTitledBorder("Títulos Cadastrados"));
+        jScrollPaneTitulos.setViewportBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        tblTitulos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Titulo", "Editora", "Autores"
+            }
+        ));
+        tblTitulos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTituloMouseClicked(evt);
+            }
+        });
+        jScrollPaneTitulos.setViewportView(tblTitulos);
+
+        jButton1.setText("Volta");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        javax.swing.GroupLayout jPanelTotalLayout = new javax.swing.GroupLayout(jPanelTotal);
+        jPanelTotal.setLayout(jPanelTotalLayout);
+        jPanelTotalLayout.setHorizontalGroup(
+            jPanelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTotalLayout.createSequentialGroup()
+                .addGroup(jPanelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelTotalLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jpnAcervo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelTotalLayout.createSequentialGroup()
+                                .addGap(131, 131, 131)
+                                .addGroup(jPanelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanelTotalLayout.createSequentialGroup()
+                                        .addGap(98, 98, 98)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanelTotalLayout.createSequentialGroup()
+                                        .addGap(82, 82, 82)
+                                        .addComponent(jLabel2))
+                                    .addGroup(jPanelTotalLayout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(39, 39, 39)
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(jPanelTotalLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTotalLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPaneTitulos, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanelTotalLayout.createSequentialGroup()
+                .addGap(340, 340, 340)
+                .addGroup(jPanelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1)
+                    .addComponent(btnVolta))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelTotalLayout.setVerticalGroup(
+            jPanelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTotalLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addGroup(jPanelTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel6)
+                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jpnAcervo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPaneTitulos, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addGap(135, 135, 135)
+                .addComponent(btnVolta)
+                .addContainerGap(1353, Short.MAX_VALUE))
+        );
+
+        jScrollPaneTotal.setViewportView(jPanelTotal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnVolta)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(159, 159, 159)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(144, 144, 144)
-                            .addComponent(jLabel2))))
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addGap(13, 13, 13)
+                .addComponent(jScrollPaneTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 779, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
-                .addComponent(btnVolta)
-                .addGap(14, 14, 14))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(jLabel5))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(jScrollPaneTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 1355, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -78,6 +518,261 @@ public class AcervoForm extends javax.swing.JFrame {
         FuncionarioForm telaFuncionrio = new FuncionarioForm();
         telaFuncionrio.setVisible(true);
     }//GEN-LAST:event_btnVoltaActionPerformed
+
+    private void tblTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTituloMouseClicked
+        int linha = tblTitulos.getSelectedRow();
+
+        if (linha == -1) {
+            return;
+        }
+
+        // Recupera dados da JTable
+        txtId.setText(tblTitulos.getValueAt(linha, 0).toString());
+        txtTitulo.setText(tblTitulos.getValueAt(linha, 1).toString());
+        txtEditora.setText(tblTitulos.getValueAt(linha, 2).toString());
+        txtAutores.setText(tblTitulos.getValueAt(linha, 3).toString());
+
+        //tblAutores.getColumn(0).setPreferredWidth(15);
+        //tblAutores.getColumn(1).setPreferredWidth(50);
+        // Habilita botões
+        btnAdicionarAcervo.setEnabled(true);
+        btnAlterarAcervo.setEnabled(false);
+        btnExcluirAcervo.setEnabled(false);
+    }//GEN-LAST:event_tblTituloMouseClicked
+
+    private void btnAdicionarAcervoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarAcervoActionPerformed
+
+        // 1. Validar Tombo
+        String tombo = txtTombo.getText().trim();
+
+        if (tombo.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Tombo deve ser informado",
+                    "Validação",
+                    JOptionPane.WARNING_MESSAGE);
+            txtTombo.requestFocus();
+            return;
+        }
+
+        // 2. Validar seleção de título
+        int linhaSelecionada = tblTitulos.getSelectedRow();
+        if (linhaSelecionada == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Selecione um título para adicionar ao acervo",
+                    "Validação",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 3. Obter ID do título selecionado
+        DefaultTableModel modelTitulos = (DefaultTableModel) tblTitulos.getModel();
+        int tituloId = (int) modelTitulos.getValueAt(linhaSelecionada, 0);
+
+        String sql = "INSERT INTO acervo (tombo, status, titulo_id) VALUES (?, 'DISPONIVEL', ?)";
+
+        try (
+                Connection conn = Conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, tombo);
+            ps.setInt(2, tituloId);
+            ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(this,
+                    "Item adicionado ao acervo com sucesso!",
+                    "Sucesso",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            txtAutores.setText("");
+
+            // 4. Recarregar tabela de acervo
+            carregarAcervo();
+
+        } catch (SQLIntegrityConstraintViolationException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Já existe um item com este tombo.",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao adicionar ao acervo: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+
+        }
+
+    }//GEN-LAST:event_btnAdicionarAcervoActionPerformed
+
+    private void btnAlterarAcervoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarAcervoActionPerformed
+
+        // 1. Validar seleção do item do acervo
+        String idAcervoStr = txtIdAcervo.getText().trim();
+
+        if (idAcervoStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Selecione um item do acervo para alterar",
+                    "Validação",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int idAcervo = Integer.parseInt(idAcervoStr);
+
+        // 2. Validar Tombo
+        String tombo = txtTomboAcervo.getText().trim();
+
+        if (tombo.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Tombo deve ser informado",
+                    "Validação",
+                    JOptionPane.WARNING_MESSAGE);
+            txtTomboAcervo.requestFocus();
+            return;
+        }
+
+        // 3. Validar Status
+        String status = comboStatus.getSelectedItem().toString();
+
+        if (status == null || status.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Selecione um status",
+                    "Validação",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 4. SQL de atualização
+        String sql = "UPDATE acervo SET tombo = ?, status = ? WHERE id = ?";
+
+        try (
+                Connection conn = Conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, tombo);
+            ps.setString(2, status);
+            ps.setInt(3, idAcervo);
+
+            ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(this,
+                    "Item do acervo alterado com sucesso!",
+                    "Sucesso",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            // 5. Recarregar tabela
+            carregarAcervo();
+
+            // 6. Resetar botões (opcional)
+            btnAdicionarAcervo.setEnabled(true);
+            btnAlterarAcervo.setEnabled(false);
+            btnExcluirAcervo.setEnabled(false);
+
+        } catch (SQLIntegrityConstraintViolationException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Já existe um item com este tombo.",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao alterar o acervo: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnAlterarAcervoActionPerformed
+
+    private void tblAcervoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAcervoMouseClicked
+        int linha = tblAcervo.getSelectedRow();
+
+        if (linha == -1) {
+            return;
+        }
+
+        // Recupera dados da JTable
+        txtIdAcervo.setText(tblAcervo.getValueAt(linha, 0).toString());
+        txtTituloAcervo.setText(tblAcervo.getValueAt(linha, 1).toString());
+        txtAutoresAcervo.setText(tblAcervo.getValueAt(linha, 2).toString());
+        txtTomboAcervo.setText(tblAcervo.getValueAt(linha, 3).toString());
+        // Recupera o status do banco (coluna 4)
+        String status = tblAcervo.getValueAt(linha, 4).toString();
+
+        // Ajusta o JComboBox para o valor correto
+        comboStatus.setSelectedItem(status);
+
+        //tblAutores.getColumn(0).setPreferredWidth(15);
+        //tblAutores.getColumn(1).setPreferredWidth(50);
+        // Habilita botões
+        btnAdicionarAcervo.setEnabled(false);
+        btnAlterarAcervo.setEnabled(true);
+        btnExcluirAcervo.setEnabled(true);
+    }//GEN-LAST:event_tblAcervoMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+        FuncionarioForm telaFuncionrio = new FuncionarioForm();
+        telaFuncionrio.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnExcluirAcervoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirAcervoActionPerformed
+        
+
+        // 1. Validar seleção do item do acervo
+        String idAcervoStr = txtIdAcervo.getText().trim();
+
+        if (idAcervoStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Selecione um item do acervo para excluir",
+                    "Validação",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int idAcervo = Integer.parseInt(idAcervoStr);
+
+        // 2. Confirmar exclusão
+        int confirm = JOptionPane.showConfirmDialog(this,
+                "Deseja realmente excluir este item do acervo?",
+                "Confirmação",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            return; // usuário cancelou
+        }
+
+        // 3. SQL de exclusão
+        String sql = "DELETE FROM acervo WHERE id = ?";
+
+        try (
+                Connection conn = Conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idAcervo);
+            ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(this,
+                    "Item do acervo excluído com sucesso!",
+                    "Sucesso",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            // 4. Recarregar tabela
+            carregarAcervo();
+
+            // 5. Resetar campos e botões
+            txtIdAcervo.setText("");
+            txtTituloAcervo.setText("");
+            txtAutoresAcervo.setText("");
+            txtTomboAcervo.setText("");
+            comboStatus.setSelectedIndex(0);
+
+            btnAdicionarAcervo.setEnabled(true);
+            btnAlterarAcervo.setEnabled(false);
+            btnExcluirAcervo.setEnabled(false);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao excluir o acervo: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnExcluirAcervoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -105,8 +800,43 @@ public class AcervoForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdicionarAcervo;
+    private javax.swing.JButton btnAlterarAcervo;
+    private javax.swing.JButton btnExcluirAcervo;
     private javax.swing.JButton btnVolta;
+    private javax.swing.JButton btnVolta1;
+    private javax.swing.JButton btnVolta2;
+    private javax.swing.JComboBox<String> comboStatus;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanelTotal;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPaneTitulos;
+    private javax.swing.JScrollPane jScrollPaneTotal;
+    private javax.swing.JPanel jpnAcervo;
+    private javax.swing.JTable tblAcervo;
+    private javax.swing.JTable tblTitulos;
+    private javax.swing.JTextField txtAutores;
+    private javax.swing.JTextField txtAutoresAcervo;
+    private javax.swing.JTextField txtEditora;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtIdAcervo;
+    private javax.swing.JTextField txtTitulo;
+    private javax.swing.JTextField txtTituloAcervo;
+    private javax.swing.JTextField txtTombo;
+    private javax.swing.JTextField txtTomboAcervo;
     // End of variables declaration//GEN-END:variables
 }
