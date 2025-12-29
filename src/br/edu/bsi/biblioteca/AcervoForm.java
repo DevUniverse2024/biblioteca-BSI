@@ -804,8 +804,6 @@ public class AcervoForm extends javax.swing.JFrame {
     private javax.swing.JButton btnAlterarAcervo;
     private javax.swing.JButton btnExcluirAcervo;
     private javax.swing.JButton btnVolta;
-    private javax.swing.JButton btnVolta1;
-    private javax.swing.JButton btnVolta2;
     private javax.swing.JComboBox<String> comboStatus;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
