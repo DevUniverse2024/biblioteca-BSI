@@ -30,7 +30,7 @@ public class ConsultaReservaForm extends javax.swing.JFrame {
     DefaultTableModel model = (DefaultTableModel) tbnReserva.getModel();
     model.setRowCount(0); // limpa a tabela
 
-    String sql = "SELECT t.titulo, r.data_reserva, ac.tombo, t.ano, " +
+    String sql = "SELECT t.titulo, r.status, r.data_reserva, ac.tombo, t.ano, " +
                  "GROUP_CONCAT(a.nome ORDER BY a.nome SEPARATOR ', ') AS autores " +
                  "FROM reserva r " +
                  "JOIN acervo ac ON r.acervo_id = ac.id " +
@@ -38,7 +38,7 @@ public class ConsultaReservaForm extends javax.swing.JFrame {
                  "LEFT JOIN titulo_autor ta ON t.id = ta.titulo_id " +
                  "LEFT JOIN autor a ON a.id = ta.autor_id " +
                  "WHERE r.usuario_id = ? " +
-                 "GROUP BY t.titulo, r.data_reserva, ac.tombo, t.ano " +
+                 "GROUP BY t.titulo, r.status, r.data_reserva, ac.tombo, t.ano " +
                  "ORDER BY r.data_reserva DESC";
 
     try (Connection conn = Conexao.getConnection();
@@ -56,6 +56,7 @@ public class ConsultaReservaForm extends javax.swing.JFrame {
                     sdf.format(rs.getTimestamp("data_reserva")),
                     rs.getString("tombo"),
                     rs.getInt("ano"),
+                    rs.getString("status"),
                     
                 });
             }
@@ -96,13 +97,13 @@ public class ConsultaReservaForm extends javax.swing.JFrame {
 
         tbnReserva.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Titulo", "Autores", "Data Reserva", "Tombo", "ano"
+                "Titulo", "Autores", "Data Reserva", "Tombo", "ano", "Status da Reserva"
             }
         ));
         tblReserva.setViewportView(tbnReserva);

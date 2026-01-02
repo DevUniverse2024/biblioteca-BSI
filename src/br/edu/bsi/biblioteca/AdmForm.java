@@ -4,12 +4,15 @@
  */
 package br.edu.bsi.biblioteca;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Carlos
  */
 public class AdmForm extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdmForm.class.getName());
 
     /**
@@ -30,8 +33,9 @@ public class AdmForm extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jbtnUsuarios = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -39,9 +43,14 @@ public class AdmForm extends javax.swing.JFrame {
 
         jLabel2.setText("Área Adminstrativa");
 
-        jButton2.setText("jButton2");
-
         jButton3.setText("Configurações de Política");
+
+        jbtnUsuarios.setText("Cadastrar Usuários");
+        jbtnUsuarios.addActionListener(this::jbtnUsuariosActionPerformed);
+
+        jButton1.setForeground(new java.awt.Color(255, 0, 0));
+        jButton1.setText("Sair");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -56,12 +65,15 @@ public class AdmForm extends javax.swing.JFrame {
                         .addGap(140, 140, 140)
                         .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(149, 149, 149)
-                        .addComponent(jButton2))
+                        .addGap(124, 124, 124)
+                        .addComponent(jbtnUsuarios))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jButton3)))
-                .addContainerGap(135, Short.MAX_VALUE))
+                        .addGap(106, 106, 106)
+                        .addComponent(jButton3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(161, 161, 161)
+                        .addComponent(jButton1)))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -70,15 +82,32 @@ public class AdmForm extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addGap(37, 37, 37)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
+                .addGap(33, 33, 33)
+                .addComponent(jbtnUsuarios)
+                .addGap(32, 32, 32)
                 .addComponent(jButton3)
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addComponent(jButton1)
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbtnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUsuariosActionPerformed
+        UsuarioForm telaUsuario = new UsuarioForm();
+        telaUsuario.setVisible(true);
+    }//GEN-LAST:event_jbtnUsuariosActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JOptionPane.showMessageDialog(
+                null,
+                "Obrigado por usar este sistema!",
+                "Mensagem",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+        System.exit(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -106,9 +135,10 @@ public class AdmForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton jbtnUsuarios;
     // End of variables declaration//GEN-END:variables
 }

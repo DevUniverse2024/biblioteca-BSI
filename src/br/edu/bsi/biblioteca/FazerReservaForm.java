@@ -157,7 +157,8 @@ public class FazerReservaForm extends javax.swing.JFrame {
         // Limites
         Calendar cal = Calendar.getInstance();
         cal.setTime(hoje);
-        cal.add(Calendar.MONTH, 1);
+        //cal.add(Calendar.MONTH, 1);
+        cal.add(Calendar.DAY_OF_MONTH, 5); // +5 dias
         jcldDataReserva.setMinSelectableDate(hoje);
         jcldDataReserva.setMaxSelectableDate(cal.getTime());
 
@@ -191,7 +192,8 @@ public class FazerReservaForm extends javax.swing.JFrame {
         // Calendário para calcular +1 mês
         Calendar cal = Calendar.getInstance();
         cal.setTime(hoje);
-        cal.add(Calendar.MONTH, 1);
+       // cal.add(Calendar.MONTH, 1);limita a um mês
+       cal.add(Calendar.DAY_OF_MONTH, 5); // +5 dias
 
 // Data máxima (1 mês à frente)
         Date umMesDepois = cal.getTime();
