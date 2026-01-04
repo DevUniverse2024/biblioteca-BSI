@@ -36,6 +36,7 @@ public class AlunoForm extends javax.swing.JFrame {
         btnFazerReserva = new javax.swing.JButton();
         btnReserva = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        btnSeusEmprestimos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,37 +47,41 @@ public class AlunoForm extends javax.swing.JFrame {
         btnFazerReserva.setText("Fazer Reserva");
         btnFazerReserva.addActionListener(this::btnFazerReservaActionPerformed);
 
-        btnReserva.setText("Consulta Reservas");
+        btnReserva.setText("Suas Reservas");
         btnReserva.addActionListener(this::btnReservaActionPerformed);
 
         jButton3.setForeground(new java.awt.Color(255, 0, 0));
         jButton3.setText("Sair");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
+        btnSeusEmprestimos.setText("Seus Emprestimos");
+        btnSeusEmprestimos.addActionListener(this::btnSeusEmprestimosActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(143, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(178, 178, 178))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(178, 178, 178))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addGap(150, 150, 150))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(174, 174, 174)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(148, 148, 148)
+                        .addGap(157, 157, 157)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnReserva)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jButton3)
-                                .addGap(25, 25, 25))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnFazerReserva)
-                                .addGap(16, 16, 16)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnFazerReserva)
+                            .addComponent(btnSeusEmprestimos))))
+                .addContainerGap(117, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,11 +92,13 @@ public class AlunoForm extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(28, 28, 28)
                 .addComponent(btnFazerReserva)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(btnReserva)
                 .addGap(18, 18, 18)
+                .addComponent(btnSeusEmprestimos)
+                .addGap(24, 24, 24)
                 .addComponent(jButton3)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         pack();
@@ -116,6 +123,11 @@ public class AlunoForm extends javax.swing.JFrame {
          ConsultaReservaForm telaConsultaReserva = new ConsultaReservaForm();
         telaConsultaReserva.setVisible(true);
     }//GEN-LAST:event_btnReservaActionPerformed
+
+    private void btnSeusEmprestimosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeusEmprestimosActionPerformed
+        ConsultaEmprestimos telaConsultaEmprestimos = new ConsultaEmprestimos();
+        telaConsultaEmprestimos.setVisible(true);
+    }//GEN-LAST:event_btnSeusEmprestimosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,6 +157,7 @@ public class AlunoForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFazerReserva;
     private javax.swing.JButton btnReserva;
+    private javax.swing.JButton btnSeusEmprestimos;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

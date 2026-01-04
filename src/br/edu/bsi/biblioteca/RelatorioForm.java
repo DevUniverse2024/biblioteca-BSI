@@ -29,30 +29,94 @@ public class RelatorioForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        btnReservas = new javax.swing.JButton();
+        btnAtrasos = new javax.swing.JButton();
+        btnEmprestimos = new javax.swing.JButton();
+        btnDashBoard = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Relatório");
+        jLabel1.setText("Biblioteca BSI");
+
+        btnReservas.setText("Reservas");
+        btnReservas.addActionListener(this::btnReservasActionPerformed);
+
+        btnAtrasos.setText("Atrasos");
+        btnAtrasos.addActionListener(this::btnAtrasosActionPerformed);
+
+        btnEmprestimos.setText("Emprestimos");
+        btnEmprestimos.addActionListener(this::btnEmprestimosActionPerformed);
+
+        btnDashBoard.setText("Dashboard");
+        btnDashBoard.addActionListener(this::btnDashBoardActionPerformed);
+
+        jLabel2.setText("Relatórios");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(159, 159, 159)
-                .addComponent(jLabel1)
-                .addContainerGap(194, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(136, 136, 136)
+                        .addComponent(btnEmprestimos))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(135, 135, 135)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnDashBoard)
+                            .addComponent(btnAtrasos)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(148, 148, 148)
+                        .addComponent(btnReservas))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(165, 165, 165)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addComponent(jLabel1)
-                .addContainerGap(266, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(btnReservas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEmprestimos)
+                .addGap(18, 18, 18)
+                .addComponent(btnAtrasos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnDashBoard)
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservasActionPerformed
+        RelatReservasForm telaReserva = new RelatReservasForm();
+        telaReserva.setVisible(true);
+    }//GEN-LAST:event_btnReservasActionPerformed
+
+    private void btnAtrasosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasosActionPerformed
+        RelatAtrasosForm  telaAtrasos= new RelatAtrasosForm();
+        telaAtrasos.setVisible(true);
+    }//GEN-LAST:event_btnAtrasosActionPerformed
+
+    private void btnEmprestimosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmprestimosActionPerformed
+       RelatEmprestimosForm telaEmprestimos = new RelatEmprestimosForm();
+        telaEmprestimos.setVisible(true);
+    }//GEN-LAST:event_btnEmprestimosActionPerformed
+
+    private void btnDashBoardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashBoardActionPerformed
+        RelatDashBoardForm telaDashboard = new RelatDashBoardForm();
+        telaDashboard.setVisible(true);
+    }//GEN-LAST:event_btnDashBoardActionPerformed
 
     /**
      * @param args the command line arguments
@@ -80,6 +144,11 @@ public class RelatorioForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtrasos;
+    private javax.swing.JButton btnDashBoard;
+    private javax.swing.JButton btnEmprestimos;
+    private javax.swing.JButton btnReservas;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }
