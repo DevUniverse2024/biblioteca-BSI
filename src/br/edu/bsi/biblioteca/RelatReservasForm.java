@@ -4,12 +4,19 @@
  */
 package br.edu.bsi.biblioteca;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Carlos
  */
 public class RelatReservasForm extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RelatReservasForm.class.getName());
 
     /**
@@ -17,6 +24,44 @@ public class RelatReservasForm extends javax.swing.JFrame {
      */
     public RelatReservasForm() {
         initComponents();
+        carregarReservas();
+    }
+
+    private void carregarReservas() {
+        DefaultTableModel model = (DefaultTableModel) tbnReserva.getModel();
+        model.setRowCount(0); // limpa a tabela
+
+        String sql = "SELECT u.nome, t.titulo, r.data_reserva, r.status, "
+           + "GROUP_CONCAT(a.nome ORDER BY a.nome SEPARATOR ', ') AS autores "
+           + "FROM reserva r "
+           + "LEFT JOIN usuario u ON r.usuario_id = u.id "
+           + "LEFT JOIN acervo ac ON r.acervo_id = ac.id "
+           + "LEFT JOIN titulo t ON ac.titulo_id = t.id "
+           + "LEFT JOIN titulo_autor ta ON t.id = ta.titulo_id "
+           + "LEFT JOIN autor a ON a.id = ta.autor_id "
+           + "GROUP BY r.id "   // agrupa por id da reserva para não perder linhas
+           + "ORDER BY r.data_reserva DESC";
+
+
+        try (Connection conn = Conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            //ps.setInt(1, SessaoUsuario.idUsuarioLogado);
+            try (ResultSet rs = ps.executeQuery()) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+                while (rs.next()) {
+                    model.addRow(new Object[]{
+                        rs.getString("nome"),
+                        rs.getString("titulo"),
+                        sdf.format(rs.getTimestamp("data_reserva")),
+                        rs.getString("status"),});
+                }
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao carregar reservas: " + e.getMessage());
+        }
     }
 
     /**
@@ -29,27 +74,82 @@ public class RelatReservasForm extends javax.swing.JFrame {
     private void initComponents() {
 
         brnVolta1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbnReserva = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         brnVolta1.setText("Volta");
         brnVolta1.addActionListener(this::brnVolta1ActionPerformed);
 
+        jLabel1.setText("Biblioteca BSI");
+
+        jLabel2.setText("Relatório de Reservas");
+
+        tbnReserva.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Aluno", "Título", "Data Empréstimo", "Situação"
+            }
+        ));
+        jScrollPane1.setViewportView(tbnReserva);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(150, 150, 150)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(brnVolta1)
-                .addContainerGap(178, Short.MAX_VALUE))
+                .addGap(280, 280, 280))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(280, 280, 280)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(262, 262, 262)
+                        .addComponent(jLabel2)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(219, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(brnVolta1)
-                .addGap(58, 58, 58))
+                .addGap(17, 17, 17))
         );
 
         pack();
@@ -89,5 +189,10 @@ public class RelatReservasForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton brnVolta1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tbnReserva;
     // End of variables declaration//GEN-END:variables
 }

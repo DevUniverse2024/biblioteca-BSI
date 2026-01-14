@@ -4,12 +4,19 @@
  */
 package br.edu.bsi.biblioteca;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Carlos
  */
 public class RelatAtrasosForm extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RelatAtrasosForm.class.getName());
 
     /**
@@ -17,6 +24,51 @@ public class RelatAtrasosForm extends javax.swing.JFrame {
      */
     public RelatAtrasosForm() {
         initComponents();
+        carregarAtrasos();
+    }
+
+    private void carregarAtrasos() {
+        DefaultTableModel model = (DefaultTableModel) jtblAtrasos.getModel();
+        model.setRowCount(0); // limpa a tabela
+
+        String sql
+                = "SELECT u.nome, t.titulo, e.data_emprestimo, "
+                + "e.data_prevista_devolucao, "
+                + "COALESCE(e.data_devolucao, e.data_prevista_devolucao) AS data_devolucao, "
+                + "DATEDIFF(CURRENT_DATE, e.data_prevista_devolucao) AS diasAtraso, "
+                + "GROUP_CONCAT(a.nome ORDER BY a.nome SEPARATOR ', ') AS autores "
+                + "FROM emprestimo e "
+                + "JOIN usuario u ON e.usuario_id = u.id "
+                + "JOIN acervo ac ON e.acervo_id = ac.id "
+                + "JOIN titulo t ON ac.titulo_id = t.id "
+                + "LEFT JOIN titulo_autor ta ON t.id = ta.titulo_id "
+                + "LEFT JOIN autor a ON a.id = ta.autor_id "
+                + "WHERE e.data_devolucao IS NULL "
+                + "AND e.data_prevista_devolucao < CURRENT_DATE "
+                + "GROUP BY e.id, u.nome, t.titulo, e.data_emprestimo, "
+                + "e.data_prevista_devolucao "
+                + "ORDER BY diasAtraso DESC";
+
+        try (Connection conn = Conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            //ps.setInt(1, SessaoUsuario.idUsuarioLogado);
+            try (ResultSet rs = ps.executeQuery()) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+                while (rs.next()) {
+                    model.addRow(new Object[]{
+                        rs.getString("nome"),
+                        rs.getString("titulo"),
+                        sdf.format(rs.getTimestamp("data_emprestimo")),
+                        sdf.format(rs.getTimestamp("data_prevista_devolucao")),
+                        rs.getInt("diasAtraso")});
+                }
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao carregar reservas: " + e.getMessage());
+        }
     }
 
     /**
@@ -28,28 +80,86 @@ public class RelatAtrasosForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         brnVolta = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtblAtrasos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setText("Biblioteca BSI");
+
+        jLabel3.setText("Consultar  Atrasos em Emprestimos");
+
         brnVolta.setText("Volta");
         brnVolta.addActionListener(this::brnVoltaActionPerformed);
+
+        jtblAtrasos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Aluno", "Título", "Data Emprestimo", "Data Prevista Devolução", "Dias de Atraso"
+            }
+        ));
+        jScrollPane1.setViewportView(jtblAtrasos);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(150, 150, 150)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(250, 250, 250)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(187, 187, 187)
+                                .addComponent(jLabel3)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(253, 253, 253)
                 .addComponent(brnVolta)
-                .addContainerGap(178, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(219, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(brnVolta)
-                .addGap(58, 58, 58))
+                .addGap(56, 56, 56))
         );
 
         pack();
@@ -89,5 +199,10 @@ public class RelatAtrasosForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton brnVolta;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jtblAtrasos;
     // End of variables declaration//GEN-END:variables
 }

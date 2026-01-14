@@ -4,6 +4,13 @@
  */
 package br.edu.bsi.biblioteca;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Carlos
@@ -17,8 +24,47 @@ public class RelatEmprestimosForm extends javax.swing.JFrame {
      */
     public RelatEmprestimosForm() {
         initComponents();
+        carregarEmprestimo();
     }
+private void carregarEmprestimo(){
+     DefaultTableModel model = (DefaultTableModel) jtblEmprestimo.getModel();
+        model.setRowCount(0); // limpa a tabela
 
+        String sql = "SELECT u.nome, t.titulo, e.data_emprestimo, e.data_prevista_devolucao, e.data_devolucao, e.status_emprestimo, "
+           + "GROUP_CONCAT(a.nome ORDER BY a.nome SEPARATOR ', ') AS autores "
+           + "FROM emprestimo e "
+           + "JOIN usuario u ON e.usuario_id = u.id "
+           + "JOIN acervo ac ON e.acervo_id = ac.id "
+           + "JOIN titulo t ON ac.titulo_id = t.id "
+           + "LEFT JOIN titulo_autor ta ON t.id = ta.titulo_id "
+           + "LEFT JOIN autor a ON a.id = ta.autor_id "
+           + "GROUP BY e.id, u.nome, t.titulo, e.data_emprestimo, e.data_devolucao,e.data_prevista_devolucao, e.status_emprestimo "
+           + "ORDER BY e.data_emprestimo DESC";
+
+
+
+        try (Connection conn = Conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            //ps.setInt(1, SessaoUsuario.idUsuarioLogado);
+            try (ResultSet rs = ps.executeQuery()) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+                while (rs.next()) {
+                    model.addRow(new Object[]{
+                        rs.getString("nome"),
+                        rs.getString("titulo"),
+                        sdf.format(rs.getTimestamp("data_emprestimo")),
+                        sdf.format(rs.getTimestamp("data_prevista_devolucao")),
+                        sdf.format(rs.getTimestamp("data_devolucao")),
+                        rs.getString("status_emprestimo"),});
+                }
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao carregar reservas: " + e.getMessage());
+        }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,27 +75,99 @@ public class RelatEmprestimosForm extends javax.swing.JFrame {
     private void initComponents() {
 
         brnVolta1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtblEmprestimo = new javax.swing.JTable();
+        brnVolta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         brnVolta1.setText("Volta");
         brnVolta1.addActionListener(this::brnVolta1ActionPerformed);
 
+        jLabel3.setText("Consultar  Emprestimos");
+
+        jLabel1.setText("Biblioteca BSI");
+
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jtblEmprestimo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Aluno", "Titulo", "Data  Emprestimo", "Data Prevista Devolucao", "Data Da Devolucao", "Status"
+            }
+        ));
+        jScrollPane1.setViewportView(jtblEmprestimo);
+
+        brnVolta.setText("Volta");
+        brnVolta.addActionListener(this::brnVoltaActionPerformed);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(brnVolta)
+                .addGap(246, 246, 246))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(12, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(brnVolta)
+                .addGap(135, 135, 135))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(150, 150, 150)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(brnVolta1)
-                .addContainerGap(178, Short.MAX_VALUE))
+                .addGap(250, 250, 250))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(235, 235, 235)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(217, 217, 217)
+                                .addComponent(jLabel3)))
+                        .addGap(0, 234, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(219, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addGap(27, 27, 27)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(371, 371, 371)
                 .addComponent(brnVolta1)
-                .addGap(58, 58, 58))
+                .addContainerGap())
         );
 
         pack();
@@ -61,6 +179,13 @@ public class RelatEmprestimosForm extends javax.swing.JFrame {
         RelatorioForm telaRelatorio = new RelatorioForm();
         telaRelatorio.setVisible(true);
     }//GEN-LAST:event_brnVolta1ActionPerformed
+
+    private void brnVoltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnVoltaActionPerformed
+        // Fecha a janela atual
+        this.dispose();
+        RelatorioForm telaRelatorio = new RelatorioForm();
+        telaRelatorio.setVisible(true);
+    }//GEN-LAST:event_brnVoltaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -88,6 +213,13 @@ public class RelatEmprestimosForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton brnVolta;
     private javax.swing.JButton brnVolta1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jtblEmprestimo;
     // End of variables declaration//GEN-END:variables
 }
