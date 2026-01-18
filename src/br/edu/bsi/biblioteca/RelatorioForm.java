@@ -114,7 +114,7 @@ public class RelatorioForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEmprestimosActionPerformed
 
     private void btnDashBoardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashBoardActionPerformed
-        RelatDashBoardForm telaDashboard = new RelatDashBoardForm();
+        DashboardView telaDashboard = new DashboardView();
         telaDashboard.setVisible(true);
     }//GEN-LAST:event_btnDashBoardActionPerformed
 
