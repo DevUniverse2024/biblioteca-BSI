@@ -4,7 +4,6 @@
  */
 package br.edu.bsi.biblioteca;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,7 +15,7 @@ public class AlunoForm extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AlunoForm.class.getName());
 
     /**
-     * Creates new form AlunoForm
+     * Creates new form FuncionarioForm
      */
     public AlunoForm() {
         initComponents();
@@ -31,101 +30,105 @@ public class AlunoForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        panelHeader = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        panelMenu = new javax.swing.JPanel();
         btnFazerReserva = new javax.swing.JButton();
         btnReserva = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         btnSeusEmprestimos = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(900, 500));
 
-        jLabel1.setText("Biblioteca BSI");
+        panelHeader.setPreferredSize(new java.awt.Dimension(100, 80));
+        panelHeader.setLayout(new java.awt.GridLayout(2, 1));
 
-        jLabel2.setText("Área do ALuno");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Biblioteca BSI");
+        panelHeader.add(jLabel2);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Área do Aluno");
+        panelHeader.add(jLabel1);
+
+        getContentPane().add(panelHeader, java.awt.BorderLayout.PAGE_START);
+
+        panelMenu.setBackground(new java.awt.Color(44, 62, 80));
+        panelMenu.setPreferredSize(new java.awt.Dimension(300, 150));
+        panelMenu.setLayout(new javax.swing.BoxLayout(panelMenu, javax.swing.BoxLayout.Y_AXIS));
+
+        btnFazerReserva.setBackground(new java.awt.Color(52, 73, 94));
+        btnFazerReserva.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnFazerReserva.setForeground(new java.awt.Color(255, 255, 255));
         btnFazerReserva.setText("Fazer Reserva");
+        btnFazerReserva.setAlignmentX(0.5F);
+        btnFazerReserva.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        btnFazerReserva.setFocusPainted(false);
+        btnFazerReserva.setMaximumSize(new java.awt.Dimension(200, 25));
         btnFazerReserva.addActionListener(this::btnFazerReservaActionPerformed);
+        panelMenu.add(btnFazerReserva);
 
+        btnReserva.setBackground(new java.awt.Color(52, 73, 94));
+        btnReserva.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnReserva.setForeground(new java.awt.Color(255, 255, 255));
         btnReserva.setText("Suas Reservas");
+        btnReserva.setAlignmentX(0.5F);
+        btnReserva.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        btnReserva.setFocusPainted(false);
+        btnReserva.setMaximumSize(new java.awt.Dimension(200, 25));
         btnReserva.addActionListener(this::btnReservaActionPerformed);
+        panelMenu.add(btnReserva);
 
-        jButton3.setForeground(new java.awt.Color(255, 0, 0));
-        jButton3.setText("Sair");
-        jButton3.addActionListener(this::jButton3ActionPerformed);
-
-        btnSeusEmprestimos.setText("Seus Emprestimos");
+        btnSeusEmprestimos.setBackground(new java.awt.Color(52, 73, 94));
+        btnSeusEmprestimos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSeusEmprestimos.setForeground(new java.awt.Color(255, 255, 255));
+        btnSeusEmprestimos.setText("Seus Empréstimos");
+        btnSeusEmprestimos.setAlignmentX(0.5F);
+        btnSeusEmprestimos.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        btnSeusEmprestimos.setFocusPainted(false);
+        btnSeusEmprestimos.setMaximumSize(new java.awt.Dimension(200, 25));
         btnSeusEmprestimos.addActionListener(this::btnSeusEmprestimosActionPerformed);
+        panelMenu.add(btnSeusEmprestimos);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(178, 178, 178))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(150, 150, 150))))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(174, 174, 174)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(157, 157, 157)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnReserva)
-                            .addComponent(btnFazerReserva)
-                            .addComponent(btnSeusEmprestimos))))
-                .addContainerGap(117, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(28, 28, 28)
-                .addComponent(btnFazerReserva)
-                .addGap(18, 18, 18)
-                .addComponent(btnReserva)
-                .addGap(18, 18, 18)
-                .addComponent(btnSeusEmprestimos)
-                .addGap(24, 24, 24)
-                .addComponent(jButton3)
-                .addContainerGap(55, Short.MAX_VALUE))
-        );
+        getContentPane().add(panelMenu, java.awt.BorderLayout.LINE_START);
+
+        btnSair.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSair.setForeground(new java.awt.Color(255, 0, 0));
+        btnSair.setText("Sair");
+        btnSair.addActionListener(this::btnSairActionPerformed);
+        getContentPane().add(btnSair, java.awt.BorderLayout.PAGE_END);
+        getContentPane().add(filler1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        JOptionPane.showMessageDialog(
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+         JOptionPane.showMessageDialog(
                 null,
                 "Obrigado por usar este sistema!",
                 "Mensagem",
                 JOptionPane.INFORMATION_MESSAGE
         );
         System.exit(0);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnFazerReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFazerReservaActionPerformed
-        FazerReservaForm telaConsultaAcervo = new FazerReservaForm();
+         FazerReservaForm telaConsultaAcervo = new FazerReservaForm();
         telaConsultaAcervo.setVisible(true);
     }//GEN-LAST:event_btnFazerReservaActionPerformed
 
     private void btnReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservaActionPerformed
-         ConsultaReservaForm telaConsultaReserva = new ConsultaReservaForm();
+        ConsultaReservaForm telaConsultaReserva = new ConsultaReservaForm();
         telaConsultaReserva.setVisible(true);
     }//GEN-LAST:event_btnReservaActionPerformed
 
     private void btnSeusEmprestimosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeusEmprestimosActionPerformed
-        ConsultaEmprestimos telaConsultaEmprestimos = new ConsultaEmprestimos();
+       ConsultaEmprestimos telaConsultaEmprestimos = new ConsultaEmprestimos();
         telaConsultaEmprestimos.setVisible(true);
     }//GEN-LAST:event_btnSeusEmprestimosActionPerformed
 
@@ -157,9 +160,12 @@ public class AlunoForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFazerReserva;
     private javax.swing.JButton btnReserva;
+    private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSeusEmprestimos;
-    private javax.swing.JButton jButton3;
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel panelHeader;
+    private javax.swing.JPanel panelMenu;
     // End of variables declaration//GEN-END:variables
 }

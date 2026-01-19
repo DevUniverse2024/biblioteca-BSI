@@ -4,7 +4,6 @@
  */
 package br.edu.bsi.biblioteca;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,7 +15,7 @@ public class AdmForm extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdmForm.class.getName());
 
     /**
-     * Creates new form AdmForm
+     * Creates new form FuncionarioForm
      */
     public AdmForm() {
         initComponents();
@@ -31,83 +30,90 @@ public class AdmForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        panelHeader = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        panelMenu = new javax.swing.JPanel();
         jbtnUsuarios = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnTitulos = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(900, 500));
 
-        jLabel1.setText("Biblioteca BSI");
+        panelHeader.setPreferredSize(new java.awt.Dimension(100, 80));
+        panelHeader.setLayout(new java.awt.GridLayout(2, 1));
 
-        jLabel2.setText("Área Adminstrativa");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Biblioteca BSI");
+        panelHeader.add(jLabel2);
 
-        jButton3.setText("Configurações de Política");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Área do Administrador");
+        panelHeader.add(jLabel1);
 
-        jbtnUsuarios.setText("Cadastrar Usuários");
+        getContentPane().add(panelHeader, java.awt.BorderLayout.PAGE_START);
+
+        panelMenu.setBackground(new java.awt.Color(44, 62, 80));
+        panelMenu.setPreferredSize(new java.awt.Dimension(220, 150));
+        panelMenu.setLayout(new javax.swing.BoxLayout(panelMenu, javax.swing.BoxLayout.Y_AXIS));
+
+        jbtnUsuarios.setBackground(new java.awt.Color(52, 73, 94));
+        jbtnUsuarios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jbtnUsuarios.setForeground(new java.awt.Color(255, 255, 255));
+        jbtnUsuarios.setText("Cadastrar Usuário");
+        jbtnUsuarios.setAlignmentX(0.5F);
+        jbtnUsuarios.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        jbtnUsuarios.setFocusPainted(false);
+        jbtnUsuarios.setMaximumSize(new java.awt.Dimension(200, 25));
         jbtnUsuarios.addActionListener(this::jbtnUsuariosActionPerformed);
+        panelMenu.add(jbtnUsuarios);
 
-        jButton1.setForeground(new java.awt.Color(255, 0, 0));
-        jButton1.setText("Sair");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnTitulos.setBackground(new java.awt.Color(52, 73, 94));
+        btnTitulos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnTitulos.setForeground(new java.awt.Color(255, 255, 255));
+        btnTitulos.setText("Configurações de politicas");
+        btnTitulos.setAlignmentX(0.5F);
+        btnTitulos.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        btnTitulos.setFocusPainted(false);
+        btnTitulos.setMaximumSize(new java.awt.Dimension(200, 25));
+        btnTitulos.addActionListener(this::btnTitulosActionPerformed);
+        panelMenu.add(btnTitulos);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(155, 155, 155)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(124, 124, 124)
-                        .addComponent(jbtnUsuarios))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(jButton3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addComponent(jButton1)))
-                .addContainerGap(129, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(33, 33, 33)
-                .addComponent(jbtnUsuarios)
-                .addGap(32, 32, 32)
-                .addComponent(jButton3)
-                .addGap(32, 32, 32)
-                .addComponent(jButton1)
-                .addContainerGap(69, Short.MAX_VALUE))
-        );
+        getContentPane().add(panelMenu, java.awt.BorderLayout.LINE_START);
+
+        btnSair.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSair.setForeground(new java.awt.Color(255, 0, 0));
+        btnSair.setText("Sair");
+        btnSair.addActionListener(this::btnSairActionPerformed);
+        getContentPane().add(btnSair, java.awt.BorderLayout.PAGE_END);
+        getContentPane().add(filler1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbtnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUsuariosActionPerformed
-        UsuarioForm telaUsuario = new UsuarioForm();
-        telaUsuario.setVisible(true);
-    }//GEN-LAST:event_jbtnUsuariosActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JOptionPane.showMessageDialog(
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+         JOptionPane.showMessageDialog(
                 null,
                 "Obrigado por usar este sistema!",
                 "Mensagem",
                 JOptionPane.INFORMATION_MESSAGE
         );
         System.exit(0);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnSairActionPerformed
+
+    private void jbtnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUsuariosActionPerformed
+         UsuarioForm telaUsuario = new UsuarioForm();
+        telaUsuario.setVisible(true);
+    }//GEN-LAST:event_jbtnUsuariosActionPerformed
+
+    private void btnTitulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTitulosActionPerformed
+        TituloForm telaTitulo = new TituloForm();
+        telaTitulo.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTitulosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -135,10 +141,13 @@ public class AdmForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnSair;
+    private javax.swing.JButton btnTitulos;
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton jbtnUsuarios;
+    private javax.swing.JPanel panelHeader;
+    private javax.swing.JPanel panelMenu;
     // End of variables declaration//GEN-END:variables
 }

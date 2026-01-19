@@ -3,8 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.edu.bsi.biblioteca;
-import javax.swing.JFrame;
+
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author Carlos
@@ -29,154 +30,175 @@ public class FuncionarioForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        panelHeader = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jbtnAcervo = new javax.swing.JButton();
-        jbtnEmprestimo = new javax.swing.JButton();
-        jbtnRelatorios = new javax.swing.JButton();
-        jbtnAutores = new javax.swing.JButton();
-        jbtnTitulos = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jbtnEmprestimo1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        panelMenu = new javax.swing.JPanel();
+        btnAutores = new javax.swing.JButton();
+        btnTitulos = new javax.swing.JButton();
+        btnRelacionar = new javax.swing.JButton();
+        btnAcervo = new javax.swing.JButton();
+        btnEmprestimo = new javax.swing.JButton();
+        btnDevolucao = new javax.swing.JButton();
+        btnRelatorios = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(900, 500));
 
-        jLabel1.setText("Biblioteca BSI");
+        panelHeader.setPreferredSize(new java.awt.Dimension(100, 80));
+        panelHeader.setLayout(new java.awt.GridLayout(2, 1));
 
-        jLabel2.setText("Área do Funcioário");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Biblioteca BSI");
+        panelHeader.add(jLabel2);
 
-        jbtnAcervo.setText("Cadastro de Acervo");
-        jbtnAcervo.addActionListener(this::jbtnAcervoActionPerformed);
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Área do Funcionário");
+        panelHeader.add(jLabel1);
 
-        jbtnEmprestimo.setText("Empréstimo");
-        jbtnEmprestimo.addActionListener(this::jbtnEmprestimoActionPerformed);
+        getContentPane().add(panelHeader, java.awt.BorderLayout.PAGE_START);
 
-        jbtnRelatorios.setText("Relatórios");
-        jbtnRelatorios.addActionListener(this::jbtnRelatoriosActionPerformed);
+        panelMenu.setBackground(new java.awt.Color(44, 62, 80));
+        panelMenu.setPreferredSize(new java.awt.Dimension(500, 350));
+        panelMenu.setLayout(new javax.swing.BoxLayout(panelMenu, javax.swing.BoxLayout.Y_AXIS));
 
-        jbtnAutores.setText("Autores");
-        jbtnAutores.addActionListener(this::jbtnAutoresActionPerformed);
+        btnAutores.setBackground(new java.awt.Color(52, 73, 94));
+        btnAutores.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnAutores.setForeground(new java.awt.Color(255, 255, 255));
+        btnAutores.setText("Autores");
+        btnAutores.setAlignmentX(0.5F);
+        btnAutores.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        btnAutores.setFocusPainted(false);
+        btnAutores.setMaximumSize(new java.awt.Dimension(200, 25));
+        btnAutores.addActionListener(this::btnAutoresActionPerformed);
+        panelMenu.add(btnAutores);
 
-        jbtnTitulos.setText("Títulos");
-        jbtnTitulos.addActionListener(this::jbtnTitulosActionPerformed);
+        btnTitulos.setBackground(new java.awt.Color(52, 73, 94));
+        btnTitulos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnTitulos.setForeground(new java.awt.Color(255, 255, 255));
+        btnTitulos.setText("Títulos");
+        btnTitulos.setAlignmentX(0.5F);
+        btnTitulos.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        btnTitulos.setFocusPainted(false);
+        btnTitulos.setMaximumSize(new java.awt.Dimension(200, 25));
+        btnTitulos.addActionListener(this::btnTitulosActionPerformed);
+        panelMenu.add(btnTitulos);
 
-        jButton1.setForeground(new java.awt.Color(255, 0, 0));
-        jButton1.setText("Sair");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnRelacionar.setBackground(new java.awt.Color(52, 73, 94));
+        btnRelacionar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnRelacionar.setForeground(new java.awt.Color(255, 255, 255));
+        btnRelacionar.setText("Relacionar Títulos/Autores");
+        btnRelacionar.setAlignmentX(0.5F);
+        btnRelacionar.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        btnRelacionar.setFocusPainted(false);
+        btnRelacionar.setMaximumSize(new java.awt.Dimension(200, 25));
+        btnRelacionar.addActionListener(this::btnRelacionarActionPerformed);
+        panelMenu.add(btnRelacionar);
 
-        jButton2.setText("Relacionar Títulos /Autores");
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        btnAcervo.setBackground(new java.awt.Color(52, 73, 94));
+        btnAcervo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnAcervo.setForeground(new java.awt.Color(255, 255, 255));
+        btnAcervo.setText("Cadastro de Acervo");
+        btnAcervo.setAlignmentX(0.5F);
+        btnAcervo.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        btnAcervo.setFocusPainted(false);
+        btnAcervo.setMaximumSize(new java.awt.Dimension(200, 25));
+        btnAcervo.addActionListener(this::btnAcervoActionPerformed);
+        panelMenu.add(btnAcervo);
 
-        jbtnEmprestimo1.setText("Devolucao");
-        jbtnEmprestimo1.addActionListener(this::jbtnEmprestimo1ActionPerformed);
+        btnEmprestimo.setBackground(new java.awt.Color(52, 73, 94));
+        btnEmprestimo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEmprestimo.setForeground(new java.awt.Color(255, 255, 255));
+        btnEmprestimo.setText("Empréstimo");
+        btnEmprestimo.setAlignmentX(0.5F);
+        btnEmprestimo.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        btnEmprestimo.setFocusPainted(false);
+        btnEmprestimo.setMaximumSize(new java.awt.Dimension(200, 25));
+        btnEmprestimo.addActionListener(this::btnEmprestimoActionPerformed);
+        panelMenu.add(btnEmprestimo);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jbtnTitulos)
-                    .addComponent(jbtnAutores)
-                    .addComponent(jLabel2))
-                .addGap(175, 175, 175))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(169, 169, 169)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
-                        .addComponent(jbtnAcervo))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jbtnEmprestimo1)
-                                .addComponent(jbtnEmprestimo))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jButton1)
-                                .addComponent(jbtnRelatorios)))))
-                .addContainerGap(124, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jbtnAutores)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jbtnTitulos)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jbtnAcervo)
-                .addGap(26, 26, 26)
-                .addComponent(jbtnEmprestimo)
-                .addGap(18, 18, 18)
-                .addComponent(jbtnEmprestimo1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jbtnRelatorios)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addContainerGap(66, Short.MAX_VALUE))
-        );
+        btnDevolucao.setBackground(new java.awt.Color(52, 73, 94));
+        btnDevolucao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnDevolucao.setForeground(new java.awt.Color(255, 255, 255));
+        btnDevolucao.setText("Devolução");
+        btnDevolucao.setAlignmentX(0.5F);
+        btnDevolucao.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        btnDevolucao.setFocusPainted(false);
+        btnDevolucao.setMaximumSize(new java.awt.Dimension(200, 25));
+        btnDevolucao.addActionListener(this::btnDevolucaoActionPerformed);
+        panelMenu.add(btnDevolucao);
+
+        btnRelatorios.setBackground(new java.awt.Color(52, 73, 94));
+        btnRelatorios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnRelatorios.setForeground(new java.awt.Color(255, 255, 255));
+        btnRelatorios.setText("Relatórios");
+        btnRelatorios.setAlignmentX(0.5F);
+        btnRelatorios.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        btnRelatorios.setFocusPainted(false);
+        btnRelatorios.setMaximumSize(new java.awt.Dimension(200, 25));
+        btnRelatorios.addActionListener(this::btnRelatoriosActionPerformed);
+        panelMenu.add(btnRelatorios);
+
+        getContentPane().add(panelMenu, java.awt.BorderLayout.LINE_START);
+
+        btnSair.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSair.setForeground(new java.awt.Color(255, 0, 0));
+        btnSair.setText("Sair");
+        btnSair.addActionListener(this::btnSairActionPerformed);
+        getContentPane().add(btnSair, java.awt.BorderLayout.PAGE_END);
+        getContentPane().add(filler1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbtnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRelatoriosActionPerformed
-        RelatorioForm telaRelatorio = new RelatorioForm();
+    private void btnDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolucaoActionPerformed
+         DevolucaoFrame telaDevolucao = new DevolucaoFrame();
+        telaDevolucao.setVisible(true);
+    }//GEN-LAST:event_btnDevolucaoActionPerformed
+
+    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
+       RelatorioForm telaRelatorio = new RelatorioForm();
         telaRelatorio.setVisible(true);
-    }//GEN-LAST:event_jbtnRelatoriosActionPerformed
+    }//GEN-LAST:event_btnRelatoriosActionPerformed
 
-    private void jbtnAcervoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAcervoActionPerformed
-        AcervoForm telaAcervo = new AcervoForm();
-        telaAcervo.setVisible(true);
-    }//GEN-LAST:event_jbtnAcervoActionPerformed
-
-    private void jbtnTitulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnTitulosActionPerformed
-        TituloForm telaTitulo = new TituloForm();
-        telaTitulo.setVisible(true);
-    }//GEN-LAST:event_jbtnTitulosActionPerformed
-
-    private void jbtnAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAutoresActionPerformed
-        AutoresForm telaAutores = new AutoresForm();
-        telaAutores.setVisible(true);
-    }//GEN-LAST:event_jbtnAutoresActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JOptionPane.showMessageDialog(
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+         JOptionPane.showMessageDialog(
                 null,
                 "Obrigado por usar este sistema!",
                 "Mensagem",
                 JOptionPane.INFORMATION_MESSAGE
         );
         System.exit(0);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnSairActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         TitulosAutorForm telaTituloAutor = new TitulosAutorForm();
-        telaTituloAutor.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoresActionPerformed
+        RelatorioForm telaRelatorio = new RelatorioForm();
+        telaRelatorio.setVisible(true);
+    }//GEN-LAST:event_btnAutoresActionPerformed
 
-    private void jbtnEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEmprestimoActionPerformed
+    private void btnTitulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTitulosActionPerformed
+        TituloForm telaTitulo = new TituloForm();
+        telaTitulo.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTitulosActionPerformed
+
+    private void btnRelacionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelacionarActionPerformed
+        AcervoForm telaAcervo = new AcervoForm();
+        telaAcervo.setVisible(true);
+    }//GEN-LAST:event_btnRelacionarActionPerformed
+
+    private void btnAcervoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcervoActionPerformed
+         AcervoForm telaAcervo = new AcervoForm();
+        telaAcervo.setVisible(true);
+    }//GEN-LAST:event_btnAcervoActionPerformed
+
+    private void btnEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmprestimoActionPerformed
          EmprestimoFrame telaEmprestimoDevolucao = new EmprestimoFrame();
         telaEmprestimoDevolucao.setVisible(true);
-    }//GEN-LAST:event_jbtnEmprestimoActionPerformed
-
-    private void jbtnEmprestimo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEmprestimo1ActionPerformed
-        DevolucaoFrame telaDevolucao = new DevolucaoFrame();
-        telaDevolucao.setVisible(true);
-    }//GEN-LAST:event_jbtnEmprestimo1ActionPerformed
+    }//GEN-LAST:event_btnEmprestimoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -204,15 +226,18 @@ public class FuncionarioForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnAcervo;
+    private javax.swing.JButton btnAutores;
+    private javax.swing.JButton btnDevolucao;
+    private javax.swing.JButton btnEmprestimo;
+    private javax.swing.JButton btnRelacionar;
+    private javax.swing.JButton btnRelatorios;
+    private javax.swing.JButton btnSair;
+    private javax.swing.JButton btnTitulos;
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JButton jbtnAcervo;
-    private javax.swing.JButton jbtnAutores;
-    private javax.swing.JButton jbtnEmprestimo;
-    private javax.swing.JButton jbtnEmprestimo1;
-    private javax.swing.JButton jbtnRelatorios;
-    private javax.swing.JButton jbtnTitulos;
+    private javax.swing.JPanel panelHeader;
+    private javax.swing.JPanel panelMenu;
     // End of variables declaration//GEN-END:variables
 }
